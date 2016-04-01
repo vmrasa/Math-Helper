@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="mathHelper.js"></script>
+        <!--Script for name confirmation-->
+        <script>
+            function confirm() {
+                var name = document.getElementById("nameInput");
+                //alert(name.value);
+                setName(name);
+                window.open("game.html")
+            }
+        </script>
+    </head>
+    
+    <body>
+        
+        <!--Page contents-->
+        <p>Welcome to Math Helper: Quest of the lost Treasure!</p>
+        <p>What is your name, adventurer?</p>
+        <input type = "text" id = "nameInput"/>
+        <button onclick="confirm()">Submit</button>
+        
+    </body>
+        
+        
+        
+        
+</html>
