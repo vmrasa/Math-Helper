@@ -10,7 +10,7 @@ Sets the <NAME> of the player
 //TODO: fix that this doesn't actually track the name from page to page
 */
 function setNAME(playerNAME) {
-    NAME= playerNAME;
+    NAME = playerNAME;
     GROUPSIZE = Math.floor((Math.random() * 10) + 1); 
 }
 
@@ -50,6 +50,7 @@ function Problem(probText, op) {
 		this.formatProblemText(this.num1, this.num2);
 	    $("#probText").text(this.storyText);
 		$("#answer").val("");
+		$("#hint").text("");
 		
 		return;
 	}
@@ -178,15 +179,17 @@ $('#submitBtn').click( function() {
 	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
 		if(level.probNum == 2 && level.difficulty == "easy") {
 			GROUPSIZE = level.problemArr[level.probNum].solution;
-			alert(GROUPSIZE);
+			//alert(GROUPSIZE);
 		}
 		level.probNum++;
 		if (level.probNum < problemsPerLevel)
 			level.problemArr[level.probNum].display();
 		else
 			alert("Not implemented");
-	} else {
-		alert("Here's the equation, you can do it!\n" + level.problemArr[level.probNum].equation);
+	}
+	else {
+		$("#hint").text(level.problemArr[level.probNum].equation);
+		//alert("Here's the equation, you can do it!\n" + level.problemArr[level.probNum].equation);
 	}
 });
 
