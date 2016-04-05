@@ -49,6 +49,7 @@ function Problem(probText, op) {
 	
 	this.display = function() {
 	    $("#probText").text(this.storyText);
+		$("#answer").val("");
 		
 		return;
 	}
@@ -80,8 +81,8 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 					new Problem("Those mountains sure were beautiful! The next stop" +
 								" looks like a forest. Oh, look at that, we're here!" +
 								" Let's walk through. Mmmmm... I love the smell of" +
-								" forests.  I saw <NUMBER> owls in the trees.  How" +
-								" many did you see? <NUMBER>?! Wow, how many owls " +
+								" forests.  I saw <N1> owls in the trees.  How" +
+								" many did you see? <N2>?! Wow, how many owls " +
 								"is that total?","+")]
 
 var medProblems = [new Problem("I've heard wonderful things about Great Valley; I'm" +
@@ -147,8 +148,9 @@ var hardProblems = [new Problem("I wonder what that sign meant by “CONSTRUCTIO
 Constructor for the level object.
 */
 function Level(levelType) {
-	var problemArr;
+	this.difficulty = levelType;
 	
+	var problemArr;
 	switch (levelType) {
 		case "easy":
 			problemArr = easyProblems;
@@ -174,6 +176,9 @@ var level = new Level("easy");
 // Check player's answers
 $('#submitBtn').click( function() {
 	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
+		if(level.probNum == 2 && level.difficulty == "easy") {
+			GROUPSIZE = level.problemArr[level.probNum].solution;
+		}
 		level.probNum++;
 		if (level.probNum < problemsPerLevel)
 			level.problemArr[level.probNum].display();
