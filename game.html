@@ -3,22 +3,57 @@
     <head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="mathHelper.js"></script>
-    </head>
-    <body>
-        
-        <div id = "problem">
-            <p id="probText">adfadfs</p>
-        </div>
-        
-        <div id = "input">
-            <br>
-            <input id="answer" type=text/>
-            <button id="submitBtn">Submit</button>
-        </div>
-        
-        <div id = "hint">
-            <!--TODO: Hint text displayed here when answer is incorrect0-->
-        </div>
-        
+    
+		<style>
+			body {
+				font-family: arial;
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			#header {
+				padding: 5px;
+				color: white;
+				background: black;
+				height: 10%;
+				text-align: left;
+				border: 3px solid gold;
+			}
+			#content {
+				margin: auto;
+				width: 50%;
+				border: 3px solid black;
+				padding: 10px;
+				background: white;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-30%);
+			}
+		</style>
+	</head>
+	
+    <body background="treasure.jpg">
+        <div id = "header">
+			<h1>Math Helper</h1>
+			<h2>Quest for the Lost Treasure of Captain Peg-Leg</h2>
+		</div>
+		
+		<div id = "content">
+			<div id = "problem">
+				<p id="probText">Default Text</p>
+			</div>
+			
+			<br>
+			
+			<p id = "hint"> <p>
+			
+			<br>
+			
+			<div id = "input">
+				<input id="answer" type=text/>
+				<button id="submitBtn">Check</button>
+			</div>
+		</div
+		
     </body>
 </html>
