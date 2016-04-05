@@ -1,31 +1,68 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>        
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="mathHelper.js"></script>
-
-    </head>
     
-    <body>
+		<style>
+			body {
+				font-family: arial;
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			#header {
+				padding: 5px;
+				color: white;
+				background: black;
+				height: 10%;
+				text-align: left;
+				border: 3px solid gold;
+			}
+			#content {
+				margin: auto;
+				width: 50%;
+				border: 3px solid black;
+				padding: 10px;
+				background: white;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-30%);
+			}
+		</style>
+	</head>
+	
+    <body background="treasure.jpg">
+        <div id = "header">
+			<h1>Math Helper</h1>
+			<h2>Quest for the Lost Treasure of Captain Peg-Leg</h2>
+		</div>
         
-        <!--Page contents-->
-        <p>Welcome to Math Helper: Quest of the lost Treasure!</p>
-        <p>What is your name, adventurer?</p>
-        <input type = "text" id = "nameInput"/>
-        <button onclick="confirm()">Submit</button>
-        
-		        <!--Script for name confirmation-->
-        <script>
-            function confirm() {
-                var name = document.getElementById("nameInput");
-                //alert(name.value);
-                setName(name);
-                window.open("game.html")
-            }
-        </script>
+        <div id = "content">
+			<p>
+			Greetings, traveler.
+			May I interest you in some treasure worth more than your mind can behold?
+			Hundreds of years ago, a pirate by the name of Petey Peg-Leg ruled the seas.
+			He was the most successful and dangerous pirate captain to ever sail the ocean.
+			I have obtained a map to his last known location: Pirate Cove.
+			So now I ask you: are you ready?
+			</p>
+			
+			<p>Before you begin: What is your name, adventurer?</p>
+			
+			<br>
+			
+			<input type = "text" id = "nameInput"/>
+			<button onclick="confirm()">Head out!</button>
+			
+					<!--Script for name confirmation-->
+			<script>
+				function confirm() {
+					var name = document.getElementById("nameInput");
+					setName(name);
+					window.location = "game.html";
+				}
+			</script>
+		</div>
     </body>
-        
-        
-        
-        
 </html>
