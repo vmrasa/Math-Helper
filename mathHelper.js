@@ -45,9 +45,9 @@ function Problem(probText, op) {
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
     }
-	this.formatProblemText(this.num1, this.num2);
 	
 	this.display = function() {
+		this.formatProblemText(this.num1, this.num2);
 	    $("#probText").text(this.storyText);
 		$("#answer").val("");
 		
@@ -178,6 +178,7 @@ $('#submitBtn').click( function() {
 	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
 		if(level.probNum == 2 && level.difficulty == "easy") {
 			GROUPSIZE = level.problemArr[level.probNum].solution;
+			alert(GROUPSIZE);
 		}
 		level.probNum++;
 		if (level.probNum < problemsPerLevel)
