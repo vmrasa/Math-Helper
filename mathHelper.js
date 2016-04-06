@@ -4,6 +4,9 @@ $(document).ready( function(){
 
 var problemsPerLevel = 5;
 
+$('#leftBtn').hide();
+$('#rightBtn').hide();
+
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -58,6 +61,10 @@ function Problem(probText, op) {
 	    $("#probText").text(this.storyText);
 		$("#answer").val("");
 		$("#hint").text("");
+		$('#rightBtn').hide();
+		$('#leftBtn').hide();
+		$('#answer').show();
+		$('#submitBtn').show();
 		
 		return;
 	}
@@ -77,8 +84,8 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 								" beef jerky, but you should grab <N2> more pieces. How many total will that give you for your journey?","+"),
 					new Problem("Let's grab the map and get ready to leave. Of" +
 								" course, you can't go on this journey alone." +
-								" You have 2 groups of friends looking to join" +
-								" us; 1 of size <N1> and another of size <N2>. How " +
+								" You have two groups of friends looking to join" +
+								" us; one of size <N1> and another of size <N2>. How " +
 								"many total friends is that, <NAME>?","+"),
 					new Problem("Now that you have supplies and and a group of" +
 								" <GROUPSIZE> people, let's head out! The first " +
@@ -150,7 +157,14 @@ var hardProblems = [new Problem("I wonder what that sign meant by “CONSTRUCTIO
 								"Alrighty, well let’s solve this final riddle: <N1> * y * z = RESULT; what are" +
 								" possible numbers for y and z? This one seems tough, <NAME>, but I believe in you!","*")]
 
-
+var easyToMedText = "It seems as though we've come to a fork in the road. A sign " +
+						"reads: \"Left -> Pirate Cove\" and \"Right -> Great Valley\". " +
+						"Which way should we go?";
+								
+var medToHardText = "What a wonderful forest! That one may be prettier than the first one." +
+					"It looks like there's another fork in the road. There's a sign here. " +
+					"It reads: \"Left -> Pirate Cove\" and \"Right -> CONSTRUCTION\". Which" +
+					" path should we take?";
 
 /*
 Constructor for the level object.
@@ -180,6 +194,9 @@ function Level(levelType) {
 }
 
 var level = new Level("easy");
+var easyLevel = null;
+var medLevel = null;
+var hardLevel = null
 
 // Check player's answers
 $('#submitBtn').click(checkAnswer);
@@ -195,21 +212,50 @@ $('#answer').on('keydown', function (event) {
 function checkAnswer() {
 	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
 		if(level.probNum == 2 && level.difficulty == "easy") {
-			GROUPSIZE = level.problemArr[level.probNum].solution;
-			//alert(GROUPSIZE);
+			setCookie("GROUPSIZE",level.problemArr[level.probNum].solution,1);
 		}
 		level.probNum++;
-		if (level.probNum < problemsPerLevel)
+		if (level.probNum < problemsPerLevel) {
 			level.problemArr[level.probNum].display();
-		else
-			alert("Not implemented");
+		} else {
+			if (level.difficulty == "easy" || level.difficulty == "medium") {
+				$('#rightBtn').show();
+				$('#leftBtn').show();
+				$('#answer').hide();
+				$('#submitBtn').hide();
+				
+				var choiceText;
+				if (level.difficulty == "easy")
+					choiceText = easyToMedText;
+				else
+					choiceText = medToHardText;
+				
+				$('#probText').text(choiceText);
+			} else {
+				alert("go to summary");
+			}
+		}
 	}
 	else {
 		$("#hint").text(level.problemArr[level.probNum].equation);
-		//alert("Here's the equation, you can do it!\n" + level.problemArr[level.probNum].equation);
 	}
 }
 
+$('#leftBtn').click(function() {
+	alert("go to summary");
+});
+
+$('#rightBtn').click(function() {
+	if (level.difficulty == "easy") {
+		easyLevel = level;
+		level = new Level("medium");
+	} else if (level.difficulty == "medium") {
+		medLevel = level;
+		level = new Level("hard");
+	} else if (level.difficulty == "hard") {
+		alert("Go to summary");
+	}
+});
 //Spits out how many questions were scored correctly in each section
 //takes in an array of all the sections
 function summaryContent() {
