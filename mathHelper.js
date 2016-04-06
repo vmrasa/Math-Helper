@@ -2,8 +2,6 @@
 
 $(document).ready( function(){
 
-var GROUPSIZE = Math.floor((Math.random() * 10) + 1);
-var NAME = null;
 var problemsPerLevel = 5;
 
 function setCookie(cname, cvalue, exdays) {
@@ -23,16 +21,6 @@ function getCookie(cname) {
     }
     return "";
 }
-    
-/*
-Sets the <NAME> of the player
-//TODO: fix that this doesn't actually track the name from page to page
-*/
-function setNAME(playerNAME) {
-    NAME = playerNAME;
-    GROUPSIZE = Math.floor((Math.random() * 10) + 1); 
-}
-
 
 /*
 Object containing all information related to a problem
