@@ -14,7 +14,7 @@ function setCookie(cname, cvalue, exdays) {
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
+    for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1);
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
@@ -182,7 +182,17 @@ function Level(levelType) {
 var level = new Level("easy");
 
 // Check player's answers
-$('#submitBtn').click( function() {
+$('#submitBtn').click(checkAnswer);
+$('#answer').on('keydown', function (event) {
+	if (event.which == 13 || event.keyCode == 13) {
+		checkAnswer();
+	}
+	else {
+		return true;
+	}
+});
+
+function checkAnswer() {
 	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
 		if(level.probNum == 2 && level.difficulty == "easy") {
 			GROUPSIZE = level.problemArr[level.probNum].solution;
@@ -198,7 +208,7 @@ $('#submitBtn').click( function() {
 		$("#hint").text(level.problemArr[level.probNum].equation);
 		//alert("Here's the equation, you can do it!\n" + level.problemArr[level.probNum].equation);
 	}
-});
+}
 
 //Spits out how many questions were scored correctly in each section
 //takes in an array of all the sections
@@ -208,13 +218,22 @@ function summaryContent() {
 
 //
     
-$('#nameBtn').click( function() {
+$('#nameBtn').click(setName);
+$('#nameInput').on('keydown', function(event) {
+	if (event.which == 13 || event.keyCode == 13) {
+		setName();
+	}
+	else {
+		return true;
+	}
+});
+
+function setName() {
     var name = document.getElementById("nameInput").value;
     var groupsize = Math.floor((Math.random() * 10) + 1);
     setCookie("NAME",name,1);
     setCookie("GROUPSIZE",groupsize,1);
-    //alert(getCookie("GROUPSIZE"));
     window.location.assign("game.html");
-});
+}
     
 });
