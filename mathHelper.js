@@ -1,10 +1,29 @@
 "use strict";
+
 $(document).ready( function(){
 
 var GROUPSIZE = Math.floor((Math.random() * 10) + 1);
 var NAME = null;
 var problemsPerLevel = 5;
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+    
 /*
 Sets the <NAME> of the player
 //TODO: fix that this doesn't actually track the name from page to page
@@ -198,30 +217,13 @@ $('#submitBtn').click( function() {
 function summaryContent() {
     
 }
+
+//
     
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return "";
-}
-
 $('#nameBtn').click( function() {
     var name = document.getElementById("nameInput").value;
-    //setCookie("NAME",name,1);
-    setNAME(name);
-    alert(NAME);
+    setCookie("NAME",name,1);
+    alert(getCookie("NAME"));
     window.location.assign("game.html");
 });
     
