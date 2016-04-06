@@ -59,8 +59,8 @@ function Problem(probText, op) {
     Insert the appropriate variables into the paragraph
     */
     this.formatProblemText = function (num1, num2) {
-		this.storyText = this.storyText.replace("<NAME>", NAME);
-        this.storyText = this.storyText.replace("<GROUPSIZE>", GROUPSIZE);
+		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
+        this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
     }
@@ -222,8 +222,10 @@ function summaryContent() {
     
 $('#nameBtn').click( function() {
     var name = document.getElementById("nameInput").value;
+    var groupsize = Math.floor((Math.random() * 10) + 1);
     setCookie("NAME",name,1);
-    alert(getCookie("NAME"));
+    setCookie("GROUPSIZE",groupsize,1);
+    //alert(getCookie("GROUPSIZE"));
     window.location.assign("game.html");
 });
     
