@@ -238,6 +238,7 @@ function checkAnswer() {
 	}
 	else {
 		$("#hint").text(level.problemArr[level.probNum].equation);
+		$("#answer").val("");
 	}
 }
 
