@@ -29,7 +29,7 @@ function getCookie(cname) {
 Object containing all information related to a problem
 - probText - the story text for the problem. Automatically replaces variable declarations
     <NAME> = <NAME>
-    <<GROUPSIZE> = <GROUPSIZE>
+    <GROUPSIZE> = <GROUPSIZE>
     <N1>,<N2> = the operands for the equation
 - op - the type of operator for the problem. Only standard mathematical operators allowed.
 */
@@ -158,13 +158,13 @@ var hardProblems = [new Problem("I wonder what that sign meant by “CONSTRUCTIO
 								" possible numbers for y and z? This one seems tough, <NAME>, but I believe in you!","*")]
 
 var easyToMedText = "It seems as though we've come to a fork in the road. A sign " +
-						"reads: \"Left -> Pirate Cove\" and \"Right -> Great Valley\". " +
-						"Which way should we go?";
+						"reads:\n\"Left -> Pirate Cove\" and\n\"Right -> Great Valley\". " +
+						"\nWhich way should we go?";
 								
 var medToHardText = "What a wonderful forest! That one may be prettier than the first one." +
 					"It looks like there's another fork in the road. There's a sign here. " +
-					"It reads: \"Left -> Pirate Cove\" and \"Right -> CONSTRUCTION\". Which" +
-					" path should we take?";
+					"It reads: \n\"Left -> Pirate Cove\" and \n\"Right -> CONSTRUCTION\".\nWhich " +
+					"path should we take?";
 
 /*
 Constructor for the level object.
@@ -223,6 +223,7 @@ function checkAnswer() {
 				$('#leftBtn').show();
 				$('#answer').hide();
 				$('#submitBtn').hide();
+				$("#hint").text("");
 				
 				var choiceText;
 				if (level.difficulty == "easy")
