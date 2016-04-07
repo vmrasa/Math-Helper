@@ -4,6 +4,8 @@ $(document).ready( function(){
 
 var problemsPerLevel = 5;
 var usedOnce = 11;
+var numWrong = 0;
+var numQuest = 0;
 
 $('#leftBtn').hide();
 $('#rightBtn').hide();
@@ -83,8 +85,6 @@ function ProblemG(probText, op) {
    
     this.equation = this.num1 + " " + op + " " + getCookie("GROUPSIZE");
 
-    
-    
     //store the solution for comparison
     this.solution = eval(this.equation);
    
@@ -193,13 +193,13 @@ var hardProblems = [new Problem("I wonder what that sign meant by \"CONSTRUCTION
 					new Problem("Oh, my... We\'re here... Pirate Cove! I\'d recognize that giant stone door from" +
 								" anywhere. Open it up! What?... It won\'t budge?! Let me see. It seems as " +
 								"though we have to solve this riddle to proceed: Yarrr! There be some " +
-								"crocodiles here, each with <N1> teeth. There are <N2> total teeth from " +
-								"all the crocodiles. How many crocodiles be there in this here cove?","/"),
+								"crocodiles here, each with <N1> teeth. There are <N2> crocodiles in the cove. " +
+								"How many crocodile teeth be there in this here cove?","*"),
 					new Problem("The door\'s opening! Amazing! Oh, look! It\'s Captain Peg-Leg\'s ship! Let\'s" +
 								" board it. Do you see it? Because I do. It\'s the Lost Treasure Chest of " +
 								"Captain Peg-Leg! Open it up! What? It\'s locked just like the door?! Ugh... " +
-								"Alrighty, well let\'s solve this final riddle:  y/<N!>  = <N2>; what are" +
-								" possible numbers for y and z? This one seems tough, <NAME>, but I believe in you!","*")]
+								"Alrighty, well let\'s solve this final riddle:  y/<N1>  = <N2>; what are" +
+								" possible numbers for y? This one seems tough, <NAME>, but I believe in you!","*")]
 
 var easyToMedText = "It seems as though we've come to a fork in the road. A sign " +
 						"reads:\n\"Left -> Pirate Cove\" and\n\"Right -> Great Valley\". " +
@@ -300,11 +300,19 @@ function checkAnswer() {
 	else {
 		$("#hint").text(level.problemArr[level.probNum].equation);
 		$("#answer").val("");
+		numWrong++;
 	}
 }
 
 $('#leftBtn').click(function() {
-	alert("go to summary");
+	if (level.difficulty == "easy") {
+		numQuest = 5;
+	} else if (level.difficulty == "medium") {
+		numQuest = 10;
+	} else if (level.difficulty == "hard") {
+		numQuest = 15;
+	}
+	summaryContent();
 });
 
 $('#rightBtn').click(function() {
@@ -315,13 +323,16 @@ $('#rightBtn').click(function() {
 		medLevel = level;
 		level = new Level("hard");
 	} else if (level.difficulty == "hard") {
-		alert("Go to summary");
+		numQuest = 15;
+		summaryContent();
 	}
 });
 //Spits out how many questions were scored correctly in each section
 //takes in an array of all the sections
 function summaryContent() {
-    
+	setCookie("NUMWRONG", numWrong,1);
+	setCookie("NUMQUEST", numQuest, 1);
+	window.location.assign("summary.html");
 }
 
 //
