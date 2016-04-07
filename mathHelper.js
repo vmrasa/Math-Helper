@@ -293,7 +293,7 @@ function checkAnswer() {
 				
 				$('#probText').text(choiceText);
 			} else {
-				alert("go to summary");
+                window.location.assign("summary.html");
 			}
 		}
 	}
