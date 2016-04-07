@@ -3,6 +3,7 @@
 $(document).ready( function(){
 
 var problemsPerLevel = 5;
+var usedOnce = 11;
 
 $('#leftBtn').hide();
 $('#rightBtn').hide();
@@ -40,30 +41,65 @@ function Problem(probText, op) {
     this.num1 = Math.floor((Math.random() * 10) + 1);
     this.num2 = Math.floor((Math.random() * 10) + 1);
     
-	if (op == "+" || op == "-" || op == "*") {
-		//Create the mathematical equation (for hint text)
-		this.equation = this.num1 + " " + op + " " + this.num2;
-		
-		//store the solution for comparison
-		this.solution = eval(this.equation);
-	} else if (op == "/") {
-		this.numerator = this.num1 * this.num2;
-		this.solution = this.num2;
-		this.equation = this.numerator + " / " + this.num1;
-	}
-		
+    //Create the mathematical equation (for hint text)
+    this.equation = this.num1 + " " + op + " " + this.num2;
+    
+    //store the solution for comparison
+    this.solution = eval(this.equation);
+
     /*
     Insert the appropriate variables into the paragraph
     */
     this.formatProblemText = function (num1, num2) {
 		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
         this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
+        this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
-		this.storyText = this.storyText.replace("<NUMERATOR>", this.numerator);
-		this.storyText = this.storyText.replace("<RESULT>", this.solution);
+        this.storyText = this.storyText.replace("<N1>", num1);
     }
+    
+	this.display = function() {
+		this.formatProblemText(this.num1, this.num2);
+	    $("#probText").text(this.storyText);
+		$("#answer").val("");
+		$("#hint").text("");
+		$('#rightBtn').hide();
+		$('#leftBtn').hide();
+		$('#answer').show();
+		$('#submitBtn').show();
+		
+		return;
+	}
+}
+
+function ProblemG(probText, op) {
+	this.storyText = probText;
+    
+    //generate random numbers for equation
+    this.num1 = Math.floor((Math.random() * 10)) + 15;
 	
+    //Create the mathematical equation (for hint text)
+   
+    this.equation = this.num1 + " " + op + " " + getCookie("GROUPSIZE");
+
+    
+    
+    //store the solution for comparison
+    this.solution = eval(this.equation);
+   
+    /*
+    Insert the appropriate variables into the paragraph
+    */
+    this.formatProblemText = function (num1, num2) {
+		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
+        this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
+        this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
+        this.storyText = this.storyText.replace("<N1>", num1);
+        this.storyText = this.storyText.replace("<N2>", num2);
+        this.storyText = this.storyText.replace("<N1>", num1);
+    }
+    
 	this.display = function() {
 		this.formatProblemText(this.num1, this.num2);
 	    $("#probText").text(this.storyText);
@@ -108,24 +144,24 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 								" many did you see? <N2>?! Wow, how many owls " +
 								"is that total?","+")]
 
-var medProblems = [new Problem("I've heard wonderful things about Great Valley; I'm" +
+var medProblems = [new ProblemG("<RESULT>I've heard wonderful things about Great Valley; I'm" +
 								" so glad we're about to see it first-hand! Hey, " +
 								"there's an orange orchard! Let's pick some oranges." +
 								" You have <GROUPSIZE> people in your group, and" +
 								" everyone should pick <N1> oranges. How many total " +
 								"oranges is that?","*"),
-					new Problem("Oranges are tasty! I'm so glad we found that orchard!" +
+					new ProblemG("Oranges are tasty! I'm so glad we found that orchard!" +
 								" What is that up ahead? It looks like a berry bush." +
 								" Oh, how wonderful! A blueberry bush! Let's pick all" +
-								" of them. It looks like we have picked <NUMERATOR>" +
+								" of them. It looks like we have picked <N1>" +
 								" blueberries. Your group is <GROUPSIZE> people, and you" +
-								" have <NUMERATOR> berries. How many berries does each person get?","/"),
-					new Problem("I love blueberries! Too bad you had to share... Uh-oh," +
+								" have <N1> berries. How many berries are left after everyone eats an equal amount?","%"),
+					new ProblemG("I love blueberries! Too bad you had to share... Uh-oh," +
 								" what is that up ahead? It looks like a witch! She says" +
 								" that your group cannot continue until you pick a total" +
-								" of <NUMERATOR> mushrooms for her cauldron stew. Well, you have" +
+								" of <N1> mushrooms for her cauldron stew. Well, you have" +
 								" <GROUPSIZE> people in your group. So, <NAME>, how many " +
-								"mushrooms does each person have to pick?","/"),
+								"mushrooms will you have to pick if all your friends pick an equal amount?","%"),
 					new Problem("That witch sure was ugly! The map says that the next" +
 								" landmark will be a large meadow. Oh, I think I see it." +
 								" Something is strange, though; it seems as though this is a" +
@@ -140,29 +176,29 @@ var medProblems = [new Problem("I've heard wonderful things about Great Valley; 
 
 var hardProblems = [new Problem("I wonder what that sign meant by \"CONSTRUCTION\"... Oh, look at this," +
 								" a roadblock. Uh oh, it says that we cannot pass until we correctly" +
-								" answer this question: If <N1> + z = <RESULT>, what is z?","+"),
+								" answer this question: If <N2> + z = <N1>, what is z?","-"),
 					new Problem("That sure was a strange type of question, <NAME>.  Have you ever seen" +
 								" one of those before? I wonder if we\'ll be seeing more of those. I " +
 								"think I see a cave up ahead! Let\'s approach it. Oh no, a troll lives " +
 								"here, and he says that we must pay the troll toll. He says you need to" +
-								" put <N1> coins into his pouch. You better do it! Now he\'s saying that" +
+								" put <N2> coins into his pouch. You better do it! Now he\'s saying that" +
 								" you may only pass if you empty the pouch and tell him how many coins" +
 								" were in there before you paid. After emptying the bag, there seem to " +
-								"be a total of <RESULT> coins. How many were there before you threw any " +
-								"inside?","+"),
+								"be a total of <N1> coins. How many were there before you threw any " +
+								"inside?","-"),
 					new Problem("I\'m glad we\'re out of there. That troll was hideous! It was a good " +
 								"idea to steal all those coins after we solved that problem, now we have" +
 								" a good amount of money to spend. Looks like our luck isn\'t lasting that" +
-								" long, though. Here\'s another roadblock! If <N1> * y = <RESULT>, what is y?","*"),
-					new Problem("Oh, my… We\'re here… Pirate Cove! I\'d recognize that giant stone door from" +
+								" long, though. Here\'s another roadblock! If y / <N1> = <N2>, what is y?","*"),
+					new Problem("Oh, my... We\'re here... Pirate Cove! I\'d recognize that giant stone door from" +
 								" anywhere. Open it up! What?... It won\'t budge?! Let me see. It seems as " +
 								"though we have to solve this riddle to proceed: Yarrr! There be some " +
-								"crocodiles here, each with <N1> teeth. There are <RESULT> total teeth from " +
-								"all the crocodiles. How many crocodiles be there in this here cove?","*"),
+								"crocodiles here, each with <N1> teeth. There are <N2> total teeth from " +
+								"all the crocodiles. How many crocodiles be there in this here cove?","/"),
 					new Problem("The door\'s opening! Amazing! Oh, look! It\'s Captain Peg-Leg\'s ship! Let\'s" +
 								" board it. Do you see it? Because I do. It\'s the Lost Treasure Chest of " +
 								"Captain Peg-Leg! Open it up! What? It\'s locked just like the door?! Ugh... " +
-								"Alrighty, well let\'s solve this final riddle: <N1> * y * z = <RESULT>; what are" +
+								"Alrighty, well let\'s solve this final riddle:  y/<N!>  = <N2>; what are" +
 								" possible numbers for y and z? This one seems tough, <NAME>, but I believe in you!","*")]
 
 var easyToMedText = "It seems as though we've come to a fork in the road. A sign " +
@@ -218,10 +254,25 @@ $('#answer').on('keydown', function (event) {
 });
 
 function checkAnswer() {
-	if (((level.difficulty == "easy" || level.difficulty == "medium") && $('#answer').val() == level.problemArr[level.probNum].solution)
-			|| (level.difficulty == "hard" && $('#answer').val() == level.problemArr[level.probNum].num2)) {
+	//alert("probNum: " + level.probNum + "\ndifficulty: " + level.difficulty + "\nResult: " + getCookie("RESULT"));
+	if ($('#answer').val() == level.problemArr[level.probNum].solution) {
 		if(level.probNum == 2 && level.difficulty == "easy") {
+			usedOnce = getCookie("GROUPSIZE");
+			//alert("usedOnce: " + usedOnce);
+			if(level.problemArr[level.probNum].solution < getCookie("GROUPSIZE")){
+				setCookie("RESULT","Some more friends join you. ",1);
+			}else if(level.problemArr[level.probNum].solution > getCookie("GROUPSIZE")){
+				setCookie("RESULT","Some friends left your party and went to the beach. ",1);
+			}
+				
 			setCookie("GROUPSIZE",level.problemArr[level.probNum].solution,1);
+			
+		}
+		if(level.probNum == 4 && level.difficulty == "easy")
+		{
+			//setCookie("RESULT",level.problemArr[level.probNum].solution,1);
+			setCookie("GROUPSIZE",usedOnce,1)
+			
 		}
 		level.probNum++;
 		if (level.probNum < problemsPerLevel) {
@@ -287,7 +338,11 @@ $('#nameInput').on('keydown', function(event) {
 
 function setName() {
     var name = document.getElementById("nameInput").value;
+    var groupsize = 10;
+    var result = "Its a beautiful day! ";
     setCookie("NAME",name,1);
+    setCookie("GROUPSIZE",groupsize,1);
+    setCookie("RESULT", result,1);
     window.location.assign("game.html");
 }
     

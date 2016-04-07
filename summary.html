@@ -1,13 +1,46 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="mathHelper.js"></script>
-    </head>
-    <body>
-        <h1>Your Results</h1>
+    
+		<style>
+			body {
+				font-family: arial;
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			#header {
+				padding: 5px;
+				color: white;
+				background: black;
+				height: 10%;
+				text-align: left;
+				border: 3px solid gold;
+			}
+			#content {
+				margin: auto;
+				width: 50%;
+				border: 3px solid black;
+				padding: 10px;
+				background: white;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-30%);
+			}
+		</style>
+	</head>
+	
+    <body background="treasure.jpg">
+        <div id = "header">
+			<h1>Math Helper</h1>
+			<h2>Quest for the Lost Treasure of Captain Peg-Leg</h2>
+		</div>
+   
         
-        <div id="summaryText">Default</div>
+        <div id = "content">
+			 <div id="summaryText">Your Results</div>
         
         <br>
         
@@ -19,5 +52,8 @@
             </ul>
             
         </div>
+		</div>
     </body>
 </html>
+
+
