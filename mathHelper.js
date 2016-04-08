@@ -58,7 +58,6 @@ function Problem(probText, op) {
         this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
-        this.storyText = this.storyText.replace("<N1>", num1);
     }
     
 	this.display = function() {
@@ -79,7 +78,8 @@ function ProblemG(probText, op) {
 	this.storyText = probText;
     
     //generate random numbers for equation
-    this.num1 = Math.floor((Math.random() * 10)) + 15;
+    this.num1 = Math.floor(Math.random() * 10) + 15;
+    this.num2 = Math.floor(Math.rand() * 10) + 1;
 	
     //Create the mathematical equation (for hint text)
    
@@ -97,7 +97,6 @@ function ProblemG(probText, op) {
         this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
-        this.storyText = this.storyText.replace("<N1>", num1);
     }
     
 	this.display = function() {
@@ -327,6 +326,7 @@ $('#rightBtn').click(function() {
 		summaryContent();
 	}
 });
+
 //Spits out how many questions were scored correctly in each section
 //takes in an array of all the sections
 function summaryContent() {
@@ -335,7 +335,8 @@ function summaryContent() {
 	window.location.assign("summary.html");
 }
 
-//
+//TODO: make the display pretty
+$('#summaryText').text("Number wrong: " + getCookie("NUMWRONG") + "\n" + "Number correction:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
