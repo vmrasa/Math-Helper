@@ -336,7 +336,7 @@ function summaryContent() {
 }
 
 //TODO: make the display pretty
-$('#summaryText').text("Number wrong: " + getCookie("NUMWRONG") + "\n" + "Number correction:" + getCookie("NUMQUEST"));
+$('#summaryText').text("Wrong Answers given: " + getCookie("NUMWRONG") + "\n " + "Questions Attempted:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
