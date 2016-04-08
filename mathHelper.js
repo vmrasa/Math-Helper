@@ -43,28 +43,41 @@ function Problem(probText, op) {
     this.num1 = Math.floor((Math.random() * 10) + 1);
     this.num2 = Math.floor((Math.random() * 10) + 1);
     
-    if(this.num1 < this.num2){
-    	this.num1 = this.num2+this.num1;
-    }
-    
-    //Create the mathematical equation (for hint text)
-    this.equation = this.num1 + " " + op + " " + this.num2;
-    
-    //store the solution for comparison
-    this.solution = eval(this.equation);
-
+	if (op == "+" || op == "-" || op == "*") {
+		//Create the mathematical equation (for hint text)
+		this.equation = this.num1 + " " + op + " " + this.num2;
+		
+		//store the solution for comparison
+		this.solution = eval(this.equation);
+	}
+	else if (op == "/") {
+		this.numerator = this.num1 * this.num2;
+		this.solution = this.num2;
+		this.equation = this.numerator + " / " + this.num1;
+	}
+	else if (op == "a+") {
+		this.num2 = this.num2 + this.num1;
+		this.equation = this.num2 + " - " + this.num1;
+		this.solution = eval(this.equation);
+	}
+	else if (op == "a/") {
+		this.numerator = this.num1 * this.num2 * 10;
+		this.solution = this.num2 * 10;
+		this.equation = this.numerator + " / " + this.num1;
+	}
+		
     /*
     Insert the appropriate variables into the paragraph
     */
     this.formatProblemText = function (num1, num2) {
 		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
         this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
-        this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
-        this.storyText = this.storyText.replace("<N1>", num1);
+		this.storyText = this.storyText.replace("<NUMERATOR>", this.numerator);
+		this.storyText = this.storyText.replace("<RESULT>", this.solution);
     }
-    
+	
 	this.display = function() {
 		this.formatProblemText(this.num1, this.num2);
 	    $("#probText").text(this.storyText);
@@ -78,7 +91,6 @@ function Problem(probText, op) {
 		return;
 	}
 }
-
 
 var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, " +
 								"and we are about to embark on a fantastic journey!" +
@@ -110,24 +122,24 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 								" many did you see? <N2>?! Wow, how many owls " +
 								"is that total?","+")]
 
-var medProblems = [new Problem("<RESULT>I've heard wonderful things about Great Valley; I'm" +
+var medProblems = [new Problem("I've heard wonderful things about Great Valley; I'm" +
 								" so glad we're about to see it first-hand! Hey, " +
 								"there's an orange orchard! Let's pick some oranges." +
-								" You now have <N2> people in your group, and" +
+								" You have <GROUPSIZE> people in your group, and" +
 								" everyone should pick <N1> oranges. How many total " +
 								"oranges is that?","*"),
 					new Problem("Oranges are tasty! I'm so glad we found that orchard!" +
 								" What is that up ahead? It looks like a berry bush." +
 								" Oh, how wonderful! A blueberry bush! Let's pick all" +
-								" of them. It looks like we have picked <N1>" +
-								" blueberries. Your group is now <N2> people, and you" +
-								" have <N1> berries. How many berries are left after everyone eats an equal amount?","%"),
+								" of them. It looks like we have picked <NUMERATOR>" +
+								" blueberries. Your group is <GROUPSIZE> people, and you" +
+								" have <NUMERATOR> berries. How many berries does each person get?","/"),
 					new Problem("I love blueberries! Too bad you had to share... Uh-oh," +
 								" what is that up ahead? It looks like a witch! She says" +
 								" that your group cannot continue until you pick a total" +
-								" of <N1> mushrooms for her cauldron stew. Well, you now have" +
-								" <N2> people in your group. So, <NAME>, how many " +
-								"mushrooms will you have to pick if all your friends pick an equal amount?","%"),
+								" of <NUMERATOR> mushrooms for her cauldron stew. Well, you have" +
+								" <GROUPSIZE> people in your group. So, <NAME>, how many " +
+								"mushrooms does each person have to pick?","/"),
 					new Problem("That witch sure was ugly! The map says that the next" +
 								" landmark will be a large meadow. Oh, I think I see it." +
 								" Something is strange, though; it seems as though this is a" +
@@ -142,30 +154,30 @@ var medProblems = [new Problem("<RESULT>I've heard wonderful things about Great 
 
 var hardProblems = [new Problem("I wonder what that sign meant by \"CONSTRUCTION\"... Oh, look at this," +
 								" a roadblock. Uh oh, it says that we cannot pass until we correctly" +
-								" answer this question: If <N2> + z = <N1>, what is z?","-"),
+								" answer this question: If <N1> + z = <N2>, what is z?","a+"),
 					new Problem("That sure was a strange type of question, <NAME>.  Have you ever seen" +
 								" one of those before? I wonder if we\'ll be seeing more of those. I " +
 								"think I see a cave up ahead! Let\'s approach it. Oh no, a troll lives " +
 								"here, and he says that we must pay the troll toll. He says you need to" +
-								" put <N2> coins into his pouch. You better do it! Now he\'s saying that" +
+								" put <N1> coins into his pouch. You better do it! Now he\'s saying that" +
 								" you may only pass if you empty the pouch and tell him how many coins" +
 								" were in there before you paid. After emptying the bag, there seem to " +
-								"be a total of <N1> coins. How many were there before you threw any " +
-								"inside?","-"),
+								"be a total of <N2> coins. How many were there before you threw any " +
+								"inside?","a+"),
 					new Problem("I\'m glad we\'re out of there. That troll was hideous! It was a good " +
 								"idea to steal all those coins after we solved that problem, now we have" +
 								" a good amount of money to spend. Looks like our luck isn\'t lasting that" +
-								" long, though. Here\'s another roadblock! If y / <N1> = <N2>, what is y?","*"),
-					new Problem("Oh, my... We\'re here... Pirate Cove! I\'d recognize that giant stone door from" +
+								" long, though. Here\'s another roadblock! If <N1> * y = <NUMERATOR>, what is y?","/"),
+					new Problem("Oh, my… We\'re here… Pirate Cove! I\'d recognize that giant stone door from" +
 								" anywhere. Open it up! What?... It won\'t budge?! Let me see. It seems as " +
 								"though we have to solve this riddle to proceed: Yarrr! There be some " +
-								"crocodiles here, each with <N1> teeth. There are <N2> crocodiles in the cove. " +
-								"How many crocodile teeth be there in this here cove?","*"),
+								"crocodiles here, each with <N1> teeth. There are <NUMERATOR> total teeth from " +
+								"all the crocodiles. How many crocodiles be there in this here cove?","/"),
 					new Problem("The door\'s opening! Amazing! Oh, look! It\'s Captain Peg-Leg\'s ship! Let\'s" +
 								" board it. Do you see it? Because I do. It\'s the Lost Treasure Chest of " +
 								"Captain Peg-Leg! Open it up! What? It\'s locked just like the door?! Ugh... " +
-								"Alrighty, well let\'s solve this final riddle:  y/<N1>  = <N2>; what are" +
-								" possible numbers for y? This one seems tough, <NAME>, but I believe in you!","*")]
+								"Alrighty, well let\'s solve this final riddle: <N1> * z = <NUMERATOR>; what " +
+								"is z? This one seems tough, <NAME>, but I believe in you!","a/")]
 
 var easyToMedText = "It seems as though we've come to a fork in the road. A sign " +
 						"reads:\n\"Left -> Pirate Cove\" and\n\"Right -> Great Valley\". " +
@@ -259,8 +271,7 @@ function checkAnswer() {
 				
 				$('#probText').text(choiceText);
 			} else {
-				numQuest = 15;
-				summaryContent();
+                window.location.assign("summary.html");
 			}
 		}
 	}
@@ -304,7 +315,7 @@ function summaryContent() {
 }
 
 //TODO: make the display pretty
-$('#summaryText').text("Wrong answers given: " + getCookie("NUMWRONG") + "\n " + "Questions attempted:" + getCookie("NUMQUEST"));
+$('#summaryText').text("Number wrong: " + getCookie("NUMWRONG") + "\n" + "Number correction:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
