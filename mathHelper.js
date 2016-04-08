@@ -43,6 +43,10 @@ function Problem(probText, op) {
     this.num1 = Math.floor((Math.random() * 10) + 1);
     this.num2 = Math.floor((Math.random() * 10) + 1);
     
+    if(this.num1 < this.num2){
+    	this.num1 = this.num2+this.num1;
+    }
+    
     //Create the mathematical equation (for hint text)
     this.equation = this.num1 + " " + op + " " + this.num2;
     
@@ -58,44 +62,7 @@ function Problem(probText, op) {
         this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
         this.storyText = this.storyText.replace("<N2>", num2);
-    }
-    
-	this.display = function() {
-		this.formatProblemText(this.num1, this.num2);
-	    $("#probText").text(this.storyText);
-		$("#answer").val("");
-		$("#hint").text("");
-		$('#rightBtn').hide();
-		$('#leftBtn').hide();
-		$('#answer').show();
-		$('#submitBtn').show();
-		
-		return;
-	}
-}
-
-/*
-function ProblemG(probText, op) {
-	this.storyText = probText;
-    
-    //generate random numbers for equation
-    this.num1 = Math.floor(Math.random() * 10) + 15;
-    this.num2 = Math.floor(Math.random() * 10) + 1;
-	
-    //Create the mathematical equation (for hint text)
-   
-    this.equation = this.num1 + " " + op + " " + getCookie("GROUPSIZE");
-
-    //store the solution for comparison
-    this.solution = eval(this.equation);
-   
-    //Insert the appropriate variables into the paragraph
-    this.formatProblemText = function (num1, num2) {
-		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
-        this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
-        this.storyText = this.storyText.replace("<RESULT>", getCookie("RESULT"));
         this.storyText = this.storyText.replace("<N1>", num1);
-        this.storyText = this.storyText.replace("<N2>", num2);
     }
     
 	this.display = function() {
@@ -111,7 +78,7 @@ function ProblemG(probText, op) {
 		return;
 	}
 }
-*/
+
 
 var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, " +
 								"and we are about to embark on a fantastic journey!" +
@@ -146,20 +113,20 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 var medProblems = [new Problem("<RESULT>I've heard wonderful things about Great Valley; I'm" +
 								" so glad we're about to see it first-hand! Hey, " +
 								"there's an orange orchard! Let's pick some oranges." +
-								" You have <GROUPSIZE> people in your group, and" +
+								" You now have <N2> people in your group, and" +
 								" everyone should pick <N1> oranges. How many total " +
 								"oranges is that?","*"),
 					new Problem("Oranges are tasty! I'm so glad we found that orchard!" +
 								" What is that up ahead? It looks like a berry bush." +
 								" Oh, how wonderful! A blueberry bush! Let's pick all" +
 								" of them. It looks like we have picked <N1>" +
-								" blueberries. Your group is <GROUPSIZE> people, and you" +
+								" blueberries. Your group is now <N2> people, and you" +
 								" have <N1> berries. How many berries are left after everyone eats an equal amount?","%"),
 					new Problem("I love blueberries! Too bad you had to share... Uh-oh," +
 								" what is that up ahead? It looks like a witch! She says" +
 								" that your group cannot continue until you pick a total" +
-								" of <N1> mushrooms for her cauldron stew. Well, you have" +
-								" <GROUPSIZE> people in your group. So, <NAME>, how many " +
+								" of <N1> mushrooms for her cauldron stew. Well, you now have" +
+								" <N2> people in your group. So, <NAME>, how many " +
 								"mushrooms will you have to pick if all your friends pick an equal amount?","%"),
 					new Problem("That witch sure was ugly! The map says that the next" +
 								" landmark will be a large meadow. Oh, I think I see it." +
@@ -292,7 +259,8 @@ function checkAnswer() {
 				
 				$('#probText').text(choiceText);
 			} else {
-                window.location.assign("summary.html");
+				numQuest = 15;
+				summaryContent();
 			}
 		}
 	}
@@ -336,7 +304,7 @@ function summaryContent() {
 }
 
 //TODO: make the display pretty
-$('#summaryText').text("Wrong Answers given: " + getCookie("NUMWRONG") + "\n " + "Questions Attempted:" + getCookie("NUMQUEST"));
+$('#summaryText').text("Wrong answers given: " + getCookie("NUMWRONG") + "\n " + "Questions attempted:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
