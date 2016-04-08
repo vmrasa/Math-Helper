@@ -125,20 +125,19 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 var medProblems = [new Problem("I've heard wonderful things about Great Valley; I'm" +
 								" so glad we're about to see it first-hand! Hey, " +
 								"there's an orange orchard! Let's pick some oranges." +
-								" You have <GROUPSIZE> people in your group, and" +
+								" You have <N2> people in your group, and" +
 								" everyone should pick <N1> oranges. How many total " +
 								"oranges is that?","*"),
 					new Problem("Oranges are tasty! I'm so glad we found that orchard!" +
 								" What is that up ahead? It looks like a berry bush." +
 								" Oh, how wonderful! A blueberry bush! Let's pick all" +
-								" of them. It looks like we have picked <NUMERATOR>" +
-								" blueberries. Your group is <GROUPSIZE> people, and you" +
-								" have <NUMERATOR> berries. How many berries does each person get?","/"),
+								" of them. Your group is <N1> people, and you" +
+								" have picked <NUMERATOR> berries. How many berries does each person get?","/"),
 					new Problem("I love blueberries! Too bad you had to share... Uh-oh," +
 								" what is that up ahead? It looks like a witch! She says" +
 								" that your group cannot continue until you pick a total" +
 								" of <NUMERATOR> mushrooms for her cauldron stew. Well, you have" +
-								" <GROUPSIZE> people in your group. So, <NAME>, how many " +
+								" <N1> people in your group. So, <NAME>, how many " +
 								"mushrooms does each person have to pick?","/"),
 					new Problem("That witch sure was ugly! The map says that the next" +
 								" landmark will be a large meadow. Oh, I think I see it." +
@@ -315,7 +314,7 @@ function summaryContent() {
 }
 
 //TODO: make the display pretty
-$('#summaryText').text("Wrong Answers submitted: " + getCookie("NUMWRONG") + "\n" + "Questions completed:" + getCookie("NUMQUEST"));
+$('#summaryText').text("Number wrong: " + getCookie("NUMWRONG") + "\n" + "Number correction:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
