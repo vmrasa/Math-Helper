@@ -74,12 +74,13 @@ function Problem(probText, op) {
 	}
 }
 
+/*
 function ProblemG(probText, op) {
 	this.storyText = probText;
     
     //generate random numbers for equation
     this.num1 = Math.floor(Math.random() * 10) + 15;
-    this.num2 = Math.floor(Math.rand() * 10) + 1;
+    this.num2 = Math.floor(Math.random() * 10) + 1;
 	
     //Create the mathematical equation (for hint text)
    
@@ -88,9 +89,7 @@ function ProblemG(probText, op) {
     //store the solution for comparison
     this.solution = eval(this.equation);
    
-    /*
-    Insert the appropriate variables into the paragraph
-    */
+    //Insert the appropriate variables into the paragraph
     this.formatProblemText = function (num1, num2) {
 		this.storyText = this.storyText.replace("<NAME>", getCookie("NAME"));
         this.storyText = this.storyText.replace("<GROUPSIZE>", getCookie("GROUPSIZE"));
@@ -112,6 +111,7 @@ function ProblemG(probText, op) {
 		return;
 	}
 }
+*/
 
 var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, " +
 								"and we are about to embark on a fantastic journey!" +
@@ -143,19 +143,19 @@ var easyProblems = [new Problem("Greetings, <NAME>!\nI am your trusty compass, "
 								" many did you see? <N2>?! Wow, how many owls " +
 								"is that total?","+")]
 
-var medProblems = [new ProblemG("<RESULT>I've heard wonderful things about Great Valley; I'm" +
+var medProblems = [new Problem("<RESULT>I've heard wonderful things about Great Valley; I'm" +
 								" so glad we're about to see it first-hand! Hey, " +
 								"there's an orange orchard! Let's pick some oranges." +
 								" You have <GROUPSIZE> people in your group, and" +
 								" everyone should pick <N1> oranges. How many total " +
 								"oranges is that?","*"),
-					new ProblemG("Oranges are tasty! I'm so glad we found that orchard!" +
+					new Problem("Oranges are tasty! I'm so glad we found that orchard!" +
 								" What is that up ahead? It looks like a berry bush." +
 								" Oh, how wonderful! A blueberry bush! Let's pick all" +
 								" of them. It looks like we have picked <N1>" +
 								" blueberries. Your group is <GROUPSIZE> people, and you" +
 								" have <N1> berries. How many berries are left after everyone eats an equal amount?","%"),
-					new ProblemG("I love blueberries! Too bad you had to share... Uh-oh," +
+					new Problem("I love blueberries! Too bad you had to share... Uh-oh," +
 								" what is that up ahead? It looks like a witch! She says" +
 								" that your group cannot continue until you pick a total" +
 								" of <N1> mushrooms for her cauldron stew. Well, you have" +
