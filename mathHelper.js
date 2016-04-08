@@ -314,7 +314,7 @@ function summaryContent() {
 }
 
 //TODO: make the display pretty
-$('#summaryText').text("Number wrong: " + getCookie("NUMWRONG") + "\n" + "Number correction:" + getCookie("NUMQUEST"));
+$('#summaryText').text("Wrong answers submitted: " + getCookie("NUMWRONG") + "\n" + "Questions attempted:" + getCookie("NUMQUEST"));
     
 $('#nameBtn').click(setName);
 $('#nameInput').on('keydown', function(event) {
